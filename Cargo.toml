@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-vmm = { path = "../rust-vmm" }
+vmm = { path = "../vmm-reference/src/vmm" }
 
 [patch.crates-io]
 linux-loader = { git = "https://github.com/rust-vmm/linux-loader.git", rev = "9a9f071" }
