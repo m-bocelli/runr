@@ -16,9 +16,9 @@ image:
 
 # removes things that dont take a long time to build
 lazy-clean:
-	rm -f kernel.tar
+	-rm -f kernel.tar
 	-docker image rm $(KERN_IMG)
 
 # true clean
 clean: lazy-clean
-	rm -r $(KERN_PATH)
+	-rm -r $(KERN_PATH)
