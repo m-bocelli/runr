@@ -7,7 +7,7 @@ pub fn parse_cli() -> result::Result<&'static str, &'static str> {
         .arg_required_else_help(true)
         .author("ROOM2")
         .version("0.1.0")
-        .about("Runs regular Docker images in Rust VMM instances using Ubuntu 20.04 kernel.")
+        .about("Runs regular Docker images as Rust VMM containers using an Ubuntu 20.04 kernel.")
         .subcommand(Command::new("run") // using subcommands so we can expand CLI in the future
                     .about("Pulls and launches Docker images as runr containers")
                     .arg(
@@ -31,8 +31,8 @@ pub fn parse_cli() -> result::Result<&'static str, &'static str> {
 
     match matches.subcommand() {
         None => Err("No argument provided"),
-        Some(("run", run_match)) => Ok("nice"),
-        Some(("pull", pull_match)) => Ok("nice"),
+        Some(("run", run_match)) => run_match, 
+        Some(("pull", pull_match)) => pull_match,
         Some(_) => Err("Invalid argument"),
     }
 }
