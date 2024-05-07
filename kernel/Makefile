@@ -1,24 +1,8 @@
-KERN_IMG = 2004kernel
-KERN_PATH = /var/lib/runr/kernel
+KERN_PATH = /var/lib/runr
 
-# installs the kernel from the tar file
-install: kernel.tar
-	mkdir -p $(KERN_PATH)
-	tar -C $(KERN_PATH) -xf kernel.tar
+install:	
+	wget https://s3.amazonaws.com/spec.ccfc.min/firecracker-ci/v1.8/x86_64/vmlinux-5.10.210 -P $(KERN_PATH)
+	mv $(KERN_PATH)/vmlinux-5.10.210 $(KERN_PATH)/kernel
 
-# extracts the kernel from the docker container as a tar file
-kernel.tar: image
-	docker run --rm $(KERN_IMG) tar -C $(KERN_PATH) -cf - . > kernel.tar
-
-# makes the docker image that is used to install the kernel
-image:
-	docker build -t $(KERN_IMG) .
-
-# removes things that dont take a long time to build
-lazy-clean:
-	-rm -f kernel.tar
-	-docker image rm $(KERN_IMG)
-
-# true clean
-clean: lazy-clean
-	-rm -r $(KERN_PATH)
+clean:
+	rm $(KERN_PATH)/kernel
