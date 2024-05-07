@@ -12,6 +12,9 @@ Prerequisites:
 - KVM enabled host kernel (tested on Ubuntu 22.04)
 
 ```
+# Install Rust and Cargo
+curl https://sh.rustup.rs -sSf | sh
+
 # Grab the source code
 git clone https://github.com/m-bocelli/runr
 
