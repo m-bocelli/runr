@@ -2,7 +2,7 @@ use clap::{Arg, Command};
 use image::extract;
 use std::result;
 
-pub fn parse_cli() -> result::Result<&'static str, &'static str> {
+pub fn parse_cli() -> result::Result<String, &'static str> {
     let matches = Command::new("runr")
         .arg_required_else_help(true)
         .author("ROOM2")
@@ -55,15 +55,17 @@ pub fn parse_cli() -> result::Result<&'static str, &'static str> {
      */
 
     //println!("Value for --output: {}", matches.get_one::<String>("runr").unwrap());
-
     match matches.subcommand() {
         None => Err("No argument provided"),
         Some(("run", run_match)) => {
             let argstr: String = run_match.clone().remove_one("image").expect("failed");
             println!("{:?}", argstr);
-            return Ok("nice");
+            return Ok(argstr);
         }
-        Some(("pull", pull_match)) => Ok("nice"),
+        Some(("pull", pull_match)) => {
+            let newstr: String = "Hello".to_string();
+            return Ok(newstr);
+        }
         Some(_) => Err("Invalid argument"),
     }
 }
