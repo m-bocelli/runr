@@ -15,6 +15,10 @@ Prerequisites:
 # Install Rust and Cargo
 curl https://sh.rustup.rs -sSf | sh
 
+# Install Docker
+apt update
+apt install docker.io
+
 # Grab the source code
 git clone https://github.com/m-bocelli/runr
 
