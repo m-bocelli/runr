@@ -2,7 +2,12 @@ use clap::{Arg, Command};
 use image::extract;
 use std::result;
 
-pub fn parse_cli() -> result::Result<String, &'static str> {
+pub struct CommandInfo {
+    pub image_name: String,
+    is_running: bool,
+}
+
+pub fn parse_cli() -> result::Result<CommandInfo, &'static str> {
     let matches = Command::new("runr")
         .arg_required_else_help(true)
         .author("ROOM2")
@@ -36,35 +41,25 @@ pub fn parse_cli() -> result::Result<String, &'static str> {
         )
         .get_matches();
 
-    // match matches.subcommand() {
-    //     None => Err("No argument provided"),
-    //     Some(("run", run_match)) => println!("{:?}", run_match),
-    // }
-
-    //let my_struct_string = format!("{:?}", matches.subcommand);
-
-    // matches.subcommand() {
-    //     Some(("run", run_match)) => {println!("Swag")};
-    // }
-
-    //println!("{}", my_struct_string);
-    /*
-            if let Some(c) = matches.get_one::<String>("runr") {
-        println!("Value for -c: {c}");
-    }
-     */
-
     //println!("Value for --output: {}", matches.get_one::<String>("runr").unwrap());
     match matches.subcommand() {
         None => Err("No argument provided"),
         Some(("run", run_match)) => {
-            let argstr: String = run_match.clone().remove_one("image").expect("failed");
-            println!("{:?}", argstr);
-            return Ok(argstr);
+            let cmdInfo = CommandInfo {
+                image_name: run_match.clone().remove_one("image").expect("failed"),
+                is_running: true,
+            };
+
+            println!("{:?}", cmdInfo.image_name);
+            return Ok(cmdInfo);
         }
         Some(("pull", pull_match)) => {
-            let newstr: String = "Hello".to_string();
-            return Ok(newstr);
+            let cmdInfo = CommandInfo {
+                image_name: pull_match.clone().remove_one("image").expect("failed"),
+                is_running: false,
+            };
+
+            return Ok(cmdInfo);
         }
         Some(_) => Err("Invalid argument"),
     }
