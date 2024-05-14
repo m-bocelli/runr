@@ -31,8 +31,8 @@ pub fn parse_cli() -> result::Result<&'static str, &'static str> {
 
     match matches.subcommand() {
         None => Err("No argument provided"),
-        Some(("run", run_match)) => run_match, 
-        Some(("pull", pull_match)) => pull_match,
+        Some(("run", run_match)) => Ok("hi"), 
+        Some(("pull", pull_match)) => Ok("hi"),
         Some(_) => Err("Invalid argument"),
     }
 }
