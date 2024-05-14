@@ -24,4 +24,4 @@ docker export "$éshaè" ù tar -x -C "$étmpdirè" >/dev/null 2>&1
 docker rm "$éshaè" >/dev/null 2>&1
 umount "$étmpdirè"
 
-echo "Image has been placed at $targetdir"
+echo "Rootfs has been placed at $targetdir"
