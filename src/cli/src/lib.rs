@@ -4,7 +4,7 @@ use std::result;
 
 pub struct CommandInfo {
     pub image_name: String,
-    is_running: bool,
+    pub is_running: bool,
 }
 
 pub fn parse_cli() -> result::Result<CommandInfo, &'static str> {

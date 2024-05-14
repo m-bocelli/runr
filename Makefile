@@ -4,7 +4,7 @@ install-kernel:
 release: install-kernel
 	cargo build --release
 
-debug: 	
+debug: 	install-kernel
 	cargo build
 
 clean:
