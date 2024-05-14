@@ -4,7 +4,7 @@ use std::result;
 
 pub struct CommandInfo {
     pub image_name: String,
-    is_running: bool,
+    pub is_running: bool,
 }
 
 pub fn parse_cli() -> result::Result<CommandInfo, &'static str> {
@@ -41,7 +41,13 @@ pub fn parse_cli() -> result::Result<CommandInfo, &'static str> {
         )
         .get_matches();
 
-    //println!("Value for --output: {}", matches.get_one::<String>("runr").unwrap());
+    /*
+       Here we find all of the matches for our subcommand.
+       If None, return no argument provided error.
+       If the command argument is "run" return the struct with is_running true.
+       If the command argument is "pull" return the struct with is_running false.
+       If argument is provided but its not one of the known commands. return "Invalid argument."
+    */
     match matches.subcommand() {
         None => Err("No argument provided"),
         Some(("run", run_match)) => {
