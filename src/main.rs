@@ -1,6 +1,6 @@
 //use std::env;
-use cli::parse_cli;
-use vmm::Vmm;
+//use cli::parse_cli;
+//use vmm::Vmm;
 
 fn main() {
     /*

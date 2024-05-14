@@ -1,14 +1,23 @@
 use clap::{Arg, Command};
-use image::extract;
 use std::result;
 
-//CommandInfo is a struct that includes the name of the image provided when running runr.
-//It also includes a boolean to know which command argument is being run. (run or pull)
+/*
+    CommandInfo is a struct that includes the name of the image provided when running runr.
+    It also includes a boolean to know which command argument is being run. (run or pull)
+*/
 pub struct CommandInfo {
     pub image_name: String,
+    pub memory_size: String,
     pub is_running: bool,
 }
 
+/* parse_cli():
+    args: None
+    return: Command Info Struct or &str
+
+    make command for runr. give it arguments such as all of the subcommands it uses.
+    creates subcommands run and pull and returns the struct based on the arguments provided.
+*/
 pub fn parse_cli() -> result::Result<CommandInfo, &'static str> {
     let matches = Command::new("runr")
         .arg_required_else_help(true)
@@ -53,8 +62,9 @@ pub fn parse_cli() -> result::Result<CommandInfo, &'static str> {
     match matches.subcommand() {
         None => Err("No argument provided"),
         Some(("run", run_match)) => {
-            let cmdInfo = CommandInfo {
+            let CmdInfo = CommandInfo {
                 image_name: run_match.clone().remove_one("image").expect("failed"),
+                memory_size: run_match.clone().remove_one("memory").expect("failed"),
                 is_running: true,
             };
 
@@ -62,8 +72,9 @@ pub fn parse_cli() -> result::Result<CommandInfo, &'static str> {
             return Ok(cmdInfo);
         }
         Some(("pull", pull_match)) => {
-            let cmdInfo = CommandInfo {
+            let CmdInfo = CommandInfo {
                 image_name: pull_match.clone().remove_one("image").expect("failed"),
+                memory_size: pull_match.clone().remove_one("memory").expect("failed"),
                 is_running: false,
             };
 
