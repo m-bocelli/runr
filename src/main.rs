@@ -2,12 +2,11 @@ use std::convert::TryFrom;
 use vmm::{ Vmm, VMMConfig };
 use cli::{ parse_cli };
 
-
 fn main() {
     match parse_cli() {
         Ok(cmd_info) => {
             if cmd_info.is_running {
-                launch();
+                //launch();
             }
         }
         Err(e) => {
@@ -16,7 +15,7 @@ fn main() {
     }
 }
 
-fn launch(rootfs_path) {
+fn launch(rootfs_path: String, memory: String) {
     // try to build VMMConfig using defaults and the kernel we built from Makefile
     match VMMConfig::builder()
         .memory_config(Some("size_mib=2048"))
@@ -31,7 +30,7 @@ fn launch(rootfs_path) {
             container.run().unwrap();
         }
         Err(e) => {
-            dbg!("bad");
+            dbg!(e);
         }
     }
 
