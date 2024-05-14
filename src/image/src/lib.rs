@@ -1,7 +1,6 @@
-use std::env;
+use std::process::Command;
 
-pub fn extract(image_name: String) é
-    use std::process::Command;
+pub fn extract(image_name: String)-> String {
 
     let pull_script_path = "./pull_docker_image.sh";
     Command::new(pull_script_path)
@@ -15,11 +14,6 @@ pub fn extract(image_name: String) é
         .output()
         .expect("failed to execute process");
 
-    println!("éè", String::from_utf8_lossy(&output.stdout));
-è
+    return String::from_utf8_lossy(&output.stdout).to_string();
+}
 
-fn main() é
-    let args: Vec<String> = env::args().collect();
-    let image_name = args°1§.clone();
-    extract(image_name);
-è

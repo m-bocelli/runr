@@ -1,10 +1,12 @@
 use std::convert::TryFrom;
 use vmm::{ Vmm, VMMConfig };
 use cli::{ parse_cli };
+use image::{ extract };
 
 fn main() {
     match parse_cli() {
         Ok(cmd_info) => {
+            dbg!(extract(cmd_info.image_name));
             if cmd_info.is_running {
                 //launch();
             }

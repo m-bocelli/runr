@@ -6,6 +6,7 @@ edition = "2018"
 [dependencies]
 vmm = { git = "https://github.com/m-bocelli/rust-vmm.git" }
 cli = { path = "src/cli" }
+image = { path = "src/image" }
 
 [workspace]
 members = [ "src/*" ]
