@@ -1,27 +1,27 @@
-£!/bin/bash
+#!/bin/bash
 image_name=$1
-targetdir="/var/lib/runr/$éimage_nameè"
-mkdir -p "$étargetdirè"
+targetdir="/var/lib/runr/${image_name}"
+mkdir -p "${targetdir}"
 
-outfile="$étargetdirè/rootfs.ext4"
+outfile="${targetdir}/rootfs.ext4"
 
-£ Create ext4 filesystem on empty 1G file
-dd if=/dev/zero of="$éoutfileè" bs=1M count=1024
-mkfs.ext4 "$éoutfileè" >/dev/null 2>&1
+# Create ext4 filesystem on empty 1G file
+dd if=/dev/zero of="${outfile}" bs=1M count=1024
+mkfs.ext4 "${outfile}" >/dev/null 2>&1
 
-£ Create a temporary directory for mounting the filesystem
+# Create a temporary directory for mounting the filesystem
 tmpdir="$(mktemp -d)"
-trap "é rm -rf $tmpdir; è" EXIT
-mount "$éoutfileè" "$étmpdirè" >/dev/null 2>&1
+trap "{ rm -rf $tmpdir; }" EXIT
+mount "${outfile}" "${tmpdir}" >/dev/null 2>&1
 
-£ Run docker container and get sha
-sha="$(docker run -d --entrypoint /bin/echo $éimage_name >/dev/null 2>&1 è)"
+# Run docker container and get sha
+sha="$(docker run -d --entrypoint /bin/echo ${image_name >/dev/null 2>&1 })"
 
-£ Export docker container into mounted filesystem
-docker export "$éshaè" ù tar -x -C "$étmpdirè" >/dev/null 2>&1
+# Export docker container into mounted filesystem
+docker export "${sha}" | tar -x -C "${tmpdir}" >/dev/null 2>&1
 
-£ Clean up
-docker rm "$éshaè" >/dev/null 2>&1
-umount "$étmpdirè"
+# Clean up
+docker rm "${sha}" >/dev/null 2>&1
+umount "${tmpdir}"
 
 echo "Rootfs has been placed at $targetdir"
