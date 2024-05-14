@@ -2,6 +2,8 @@ use clap::{Arg, Command};
 use image::extract;
 use std::result;
 
+//CommandInfo is a struct that includes the name of the image provided when running runr.
+//It also includes a boolean to know which command argument is being run. (run or pull)
 pub struct CommandInfo {
     pub image_name: String,
     pub is_running: bool,
