@@ -4,7 +4,7 @@ pub fn extract(image_name: String) é
     use std::process::Command;
 
     let pull_script_path = "./pull_docker_image.sh";
-    let pull = Command::new(pull_script_path)
+    Command::new(pull_script_path)
         .arg(&image_name)
         .output()
         .expect("failed to execute process");
