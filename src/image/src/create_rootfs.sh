@@ -15,7 +15,7 @@ trap "{ rm -rf $tmpdir; }" EXIT
 mount "${outfile}" "${tmpdir}" >/dev/null 2>&1
 
 # Run docker container and get sha
-sha="$(docker run -d --entrypoint /bin/echo ${image_name >/dev/null 2>&1 })"
+sha="$(docker run -d --entrypoint /bin/echo ${image_name > /dev/null 2>&1 })"
 
 # Export docker container into mounted filesystem
 docker export "${sha}" | tar -x -C "${tmpdir}" >/dev/null 2>&1
@@ -24,4 +24,4 @@ docker export "${sha}" | tar -x -C "${tmpdir}" >/dev/null 2>&1
 docker rm "${sha}" >/dev/null 2>&1
 umount "${tmpdir}"
 
-echo "Rootfs has been placed at $targetdir"
+echo $targetdir
