@@ -25,8 +25,8 @@ git clone https://github.com/m-bocelli/runr
 # Change into dir
 cd runr
 
-# Build the release binary
-make release
+# Build the debug binary (no stable release)
+make debug
 ```
 
 # Running
