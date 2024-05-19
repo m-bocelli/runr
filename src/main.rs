@@ -6,10 +6,14 @@ use image::{ extract };
 fn main() {
     match parse_cli() {
         Ok(cmd_info) => {
-            dbg!(extract(cmd_info.image_name));
+            // if run cmd was used, launch VM
             if cmd_info.is_running {
-                //launch();
-            }
+                let mut rootfs = extract(cmd_info.image_name);
+                rootfs = "path=".to_owned() + &rootfs;
+                let mem = "size_mib=".to_owned() + &cmd_info.memory_size;
+
+                launch(Some(&rootfs), Some(&mem));
+            } 
         }
         Err(e) => {
             dbg!(e);
@@ -17,14 +21,15 @@ fn main() {
     }
 }
 
-fn launch(rootfs_path: String, memory: String) {
+fn launch(rootfs_path: Option<&str>, memory: Option<&str>) {
     // try to build VMMConfig using defaults and the kernel we built from Makefile
+    dbg!(rootfs_path);
     match VMMConfig::builder()
-        .memory_config(Some("size_mib=2048"))
+        .memory_config(memory)
         .vcpu_config(Some("num=1"))
-        .kernel_config(Some("path=/var/lib/runr/vmlinux-5.10.210"))
+        .kernel_config(Some("path=/var/lib/runr/kernel/vmlinux-5.10.210"))
         .net_config(Some("tap=tap0"))
-        .block_config(Some("path=/var/lib/runr/memcached/rootfs.ext4")) // root filesystem of the Docker image
+        .block_config(rootfs_path) // root filesystem of the Docker image
         .build() {
         Ok(vmm_config) => {
             // launch VM

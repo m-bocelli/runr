@@ -16,5 +16,7 @@ pub fn extract(image_name: String)-> String {
         .output()
         .expect("failed to execute process");
 
-    return String::from_utf8_lossy(&output.stdout).to_string();
+    let mut rootfs_path = String::from_utf8(output.stdout).unwrap();
+    rootfs_path.pop();
+    return rootfs_path; 
 }
