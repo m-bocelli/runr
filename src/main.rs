@@ -28,7 +28,6 @@ fn main() {
 
 fn launch(rootfs_path: Option<&str>, memory: Option<&str>) {
     // try to build VMMConfig using defaults and the kernel we built from Makefile
-    dbg!(rootfs_path);
     match VMMConfig::builder()
         .memory_config(memory)
         .vcpu_config(Some("num=1"))
