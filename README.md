@@ -26,12 +26,12 @@ git clone https://github.com/m-bocelli/runr
 cd runr
 
 # Build the release binary
-cargo build
+cargo build --release
 ```
 
 # Running
 
 ```
-# Launch a BusyBox Docker image inside a runr container
-runr run busybox
+# Launch a BusyBox Docker image inside a runr container with 256mib of memory
+runr run busybox --memory=256
 ```
