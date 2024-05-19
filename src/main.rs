@@ -6,14 +6,19 @@ use image::{ extract };
 fn main() {
     match parse_cli() {
         Ok(cmd_info) => {
+            let image = cmd_info.image_name;
+            let mut rootfs = extract(image.clone());
+
             // if run cmd was used, launch VM
             if cmd_info.is_running {
-                let mut rootfs = extract(cmd_info.image_name);
+                // need to prepend so VMM recognizes the path and memory
                 rootfs = "path=".to_owned() + &rootfs;
                 let mem = "size_mib=".to_owned() + &cmd_info.memory_size;
 
                 launch(Some(&rootfs), Some(&mem));
-            } 
+            } else {
+                println!("Pulled and created {} rootfs at {}", image, rootfs); 
+            }
         }
         Err(e) => {
             dbg!(e);
