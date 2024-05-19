@@ -26,7 +26,7 @@ git clone https://github.com/m-bocelli/runr
 cd runr
 
 # Build the release binary
-cargo build --release
+make release
 ```
 
 # Running
